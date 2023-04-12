@@ -5,7 +5,7 @@ import { LOAN_TO_VALUE_CALC } from './gql'
 import App from './App';
 
 describe("App", () => {
-  test("Should show corrent title", () => {
+  test("Should show correct title", () => {
     render(
       <MockedProvider mocks={[]} addTypename={false}>
         <App />
