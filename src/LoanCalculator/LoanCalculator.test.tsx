@@ -4,36 +4,41 @@ import { MockedProvider } from "@apollo/client/testing";
 import { LOAN_TO_VALUE_CALC } from '../gql'
 import LoanCalculator from './LoanCalculator';
 
+const depositValue = 1000;
+const purchasePrice = 1000;
+const mockRequest = {
+  request: {
+    query: LOAN_TO_VALUE_CALC,
+    variables: {
+      depositValue,
+      purchasePrice,
+    },
+  }
+}
 
 describe("LoanCalculator", () => {
   test("Should show calculation loader", () => {
-    const mocks: any = [];
+    const mocks = {
+      ...mockRequest
+    };
 
     const { getByPlaceholderText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={[mocks]} addTypename={false}>
         <LoanCalculator />
       </MockedProvider>
     );
     fireEvent.change(getByPlaceholderText("Deposit Amount"), {
-      target: { value: 1000 }
+      target: { value: depositValue }
     });
     fireEvent.change(getByPlaceholderText("Purchase Price"), {
-      target: { value: 1000 }
+      target: { value: purchasePrice }
     });
     expect(screen.getByText(/Calculation in progress/i)).toBeDefined()
   });
 
   test("Should show calculation error", async () => {
-    const depositValue = 1000;
-    const purchasePrice = 1000;
-    const mocks: any = {
-      request: {
-        query: LOAN_TO_VALUE_CALC,
-        variables: {
-          depositValue,
-          purchasePrice,
-        },
-      },
+    const mocks = {
+      ...mockRequest,
       error: new Error("An error occurred")
     };
 
@@ -54,16 +59,8 @@ describe("LoanCalculator", () => {
   });
 
   test("Should show calculation results", async () => {
-    const depositValue = 1000;
-    const purchasePrice = 1000;
     const mocks: any = {
-      request: {
-        query: LOAN_TO_VALUE_CALC,
-        variables: {
-          depositValue,
-          purchasePrice,
-        },
-      },
+      ...mockRequest,
       result: {
         data: {
           loanToValueCalc: { result: '100%' }
