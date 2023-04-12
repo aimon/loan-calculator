@@ -60,6 +60,7 @@ function LoanCalculator() {
         <div className="flex flex-col items-start">
           <input
             type="number"
+            placeholder="Deposit Amount"
             onChange={onDepositPriceChange}
             name="depositValue"
             className="input"
@@ -76,6 +77,7 @@ function LoanCalculator() {
         <div className="flex flex-col items-start">
           <input
             type="number"
+            placeholder="Purchase Price"
             onChange={onPurchasePriceChange}
             name="purchasePrice"
             className="input"
@@ -115,6 +117,7 @@ function LoanCalculator() {
             className="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
             role="alert"
           >
+            <div className="font-bold">Calculated</div>
             <div className="text-3xl text-center font-bold text-purple-600">
               {calculatedResponse?.loanToValueCalc?.result}
             </div>
